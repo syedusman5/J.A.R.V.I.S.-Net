@@ -6,6 +6,7 @@ namespace Jarvis.Core.Service
 {
     public sealed class ReminderService(
     ReminderStore store,
+    ISpeechOutput speech,
     TimeProvider clock,
     ILogger<ReminderService> logger) : BackgroundService
     {
@@ -24,6 +25,8 @@ namespace Jarvis.Core.Service
                         Console.WriteLine();
                         Console.WriteLine($"[REMINDER] {reminder.Text}");
                         Console.Write("> ");
+
+                        await speech.SpeakAsync($"Reminder: {reminder.Text}", stoppingToken);
                     }
                 }
             }

@@ -3,6 +3,7 @@ using Jarvis.Cli.Service;
 using Jarvis.Core.Interface;
 using Jarvis.Core.Service;
 using Jarvis.Core.Skill;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,7 @@ builder.Logging.AddFilter("Microsoft.Hosting.Lifetime", LogLevel.Warning);
 // Register dependencies
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<ReminderStore>();
+builder.Services.AddSingleton<ISpeechOutput, SystemSpeechOutput>();
 
 // Register HttpClient for skills that need it
 builder.Services.AddHttpClient("jarvis", c =>
@@ -26,6 +28,13 @@ builder.Services.AddHttpClient("jarvis", c =>
     c.Timeout = TimeSpan.FromSeconds(5);
     c.DefaultRequestHeaders.UserAgent.ParseAdd("JarvisAssistant/0.1");
 });
+
+// Voice off by default; flip Jarvis:VoiceEnabled in appsettings.json to turn it on.
+var voiceEnabled = builder.Configuration.GetValue("Jarvis:VoiceEnabled", false);
+if (voiceEnabled)
+    builder.Services.AddSingleton<ISpeechOutput, SystemSpeechOutput>();
+else
+    builder.Services.AddSingleton<ISpeechOutput, NullSpeechOutput>();
 
 // Register SkillRouter
 builder.Services.AddSingleton<SkillRouter>();
