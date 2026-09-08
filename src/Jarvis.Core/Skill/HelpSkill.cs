@@ -30,7 +30,9 @@ namespace Jarvis.Core.Skill
                     sb.AppendLine($"  {"",-12}   e.g. \"{skill.Examples[0]}\"");
             }
 
-            return Task.FromResult(SkillResult.Ok(sb.ToString().TrimEnd()));
+            var spokenText = "Here are the commands you can use";
+
+            return Task.FromResult(SkillResult.Ok(sb.ToString().TrimEnd(), spokenText));
         }
     }
 }

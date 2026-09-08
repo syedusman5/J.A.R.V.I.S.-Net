@@ -20,7 +20,6 @@ builder.Logging.AddFilter("Microsoft.Hosting.Lifetime", LogLevel.Warning);
 // Register dependencies
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<ReminderStore>();
-builder.Services.AddSingleton<ISpeechOutput, SystemSpeechOutput>();
 
 // Register HttpClient for skills that need it
 builder.Services.AddHttpClient("jarvis", c =>
@@ -30,7 +29,7 @@ builder.Services.AddHttpClient("jarvis", c =>
 });
 
 // Voice off by default; flip Jarvis:VoiceEnabled in appsettings.json to turn it on.
-var voiceEnabled = builder.Configuration.GetValue("Jarvis:VoiceEnabled", false);
+var voiceEnabled = true;
 if (voiceEnabled)
     builder.Services.AddSingleton<ISpeechOutput, SystemSpeechOutput>();
 else

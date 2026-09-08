@@ -1,4 +1,5 @@
 ﻿using Jarvis.Cli.Service;
+using Jarvis.Core.Interface;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Jarvis.Cli
 {
-    public sealed class ConsoleLoop(SkillRouter router, IHostApplicationLifetime lifetime) : BackgroundService
+    public sealed class ConsoleLoop(SkillRouter router, ISpeechOutput speech, IHostApplicationLifetime lifetime) : BackgroundService
     {
         private static readonly string[] ExitWords = ["exit", "quit", "bye", "goodbye"];
 
@@ -33,6 +34,7 @@ namespace Jarvis.Cli
                 var result = await router.HandleAsync(input, stoppingToken);
 
                 Console.WriteLine(result.DisplayText);
+                speech.SpeakAsync(result.SpeechText);
                 Console.WriteLine();
 
             }

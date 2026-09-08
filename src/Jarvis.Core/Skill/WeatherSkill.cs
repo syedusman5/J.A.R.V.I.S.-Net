@@ -47,12 +47,12 @@ namespace Jarvis.Core.Skill
             var c = forecast.Current;
             var text = $"{match.Name}: {c.Temperature:0.#}°C, {Describe(c.WeatherCode)}, humidity {c.Humidity}%.";
 
-            return SkillResult.Ok(text);
+            return SkillResult.Ok(text, text);
         }
 
         public int Score(UserRequest request)
         {
-            if (!request.ContainsAnyWord("weather", "temperature", "forecast", "raining", "hot", "cold"))
+            if (!request.ContainsAnyWord("weather", "temperature", "forecast", "raining", "hot", "cold", "umbrella"))
                 return 0;
 
             return request.ContainsAnyWord("weather", "forecast") ? 85 : 50;

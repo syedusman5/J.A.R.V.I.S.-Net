@@ -45,7 +45,8 @@ namespace Jarvis.Core.Skill
             store.Add(text, dueAt);
 
             var confirmation = $"Okay - I'll remind you to {text} in {amount} {unit}{(amount == 1 ? "" : "s")}.";
-            return Task.FromResult(SkillResult.Ok(confirmation));
+            var spokenConfirmation = $"Sure Syed, I'll remind you to {text} in {amount} {unit}.";
+            return Task.FromResult(SkillResult.Ok(confirmation, spokenConfirmation));
         }
 
         private SkillResult ListReminders()

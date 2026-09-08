@@ -25,7 +25,7 @@ namespace Jarvis.Core.Skill
                 _ => $"It's {now:h:mm tt}."
             };
 
-            return Task.FromResult(SkillResult.Ok(text));
+            return Task.FromResult(SkillResult.Ok(text, text));
 
         }
 
