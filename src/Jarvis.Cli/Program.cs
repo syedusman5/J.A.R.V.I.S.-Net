@@ -49,6 +49,16 @@ builder.Services.AddSingleton<ISkill, WeatherSkill>();
 builder.Services.AddSingleton<ISkill, FileSearchSkill>();
 builder.Services.AddSingleton<ISkill, ReminderSkill>();
 
+// Register SpeechToTextService with explicit model path to avoid DI resolving System.String
+var modelPath = Path.Combine(AppContext.BaseDirectory, "Models", "ggml-base.bin");
+
+Directory.CreateDirectory(Path.GetDirectoryName(modelPath)!);
+
+builder.Services.AddSingleton(new WhisperModelService(modelPath));
+
+builder.Services.AddSingleton(sp => new SpeechToTextService(modelPath));
+
+
 // Register services
 builder.Services.AddHostedService<ReminderService>();
 builder.Services.AddHostedService<ConsoleLoop>();
