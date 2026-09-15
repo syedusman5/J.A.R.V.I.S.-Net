@@ -1,4 +1,5 @@
 ﻿using Jarvis.Cli.Service;
+using Jarvis.Cli.Service.Audio;
 using Jarvis.Core.Interface;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -26,7 +27,7 @@ namespace Jarvis.Cli
             while (!stoppingToken.IsCancellationRequested)
             {
                 Console.ReadLine();
-                Console.Write("> Listening...");
+                Console.Write(">");
 
                 var recorder = new AudioRecorder();
 

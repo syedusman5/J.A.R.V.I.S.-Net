@@ -11,7 +11,7 @@ public class SpeechToTextService : IDisposable
 
         _processor = _factory
             .CreateBuilder()
-            .WithLanguage("auto")
+            .WithLanguage("en")
             .Build();
     }
 

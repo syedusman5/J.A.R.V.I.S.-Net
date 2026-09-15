@@ -1,6 +1,6 @@
 using NAudio.Wave;
 
-namespace Jarvis.Cli.Service
+namespace Jarvis.Cli.Service.Audio
 {
     public class AudioRecorder
     {
