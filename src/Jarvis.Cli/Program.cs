@@ -24,7 +24,7 @@ builder.Services.AddSingleton<ReminderStore>();
 // Register HttpClient for skills that need it
 builder.Services.AddHttpClient("jarvis", c =>
 {
-    c.Timeout = TimeSpan.FromSeconds(5);
+    c.Timeout = TimeSpan.FromSeconds(30);
     c.DefaultRequestHeaders.UserAgent.ParseAdd("JarvisAssistant/0.1");
 });
 
@@ -48,6 +48,9 @@ builder.Services.AddSingleton<ISkill, HelpSkill>();
 builder.Services.AddSingleton<ISkill, WeatherSkill>();
 builder.Services.AddSingleton<ISkill, FileSearchSkill>();
 builder.Services.AddSingleton<ISkill, ReminderSkill>();
+
+// local llm service
+builder.Services.AddSingleton<ILlmService, OllamaLlmService>();
 
 // Register SpeechToTextService with explicit model path to avoid DI resolving System.String
 var modelPath = Path.Combine(AppContext.BaseDirectory, "Models", "ggml-base.bin");
