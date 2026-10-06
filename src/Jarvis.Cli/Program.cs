@@ -1,4 +1,4 @@
-﻿using Jarvis.Cli;
+using Jarvis.Cli;
 using Jarvis.Cli.Service;
 using Jarvis.Core.Interface;
 using Jarvis.Core.Service;
@@ -28,8 +28,13 @@ builder.Services.AddHttpClient("jarvis", c =>
     c.DefaultRequestHeaders.UserAgent.ParseAdd("JarvisAssistant/0.1");
 });
 
-// Voice off by default; flip Jarvis:VoiceEnabled in appsettings.json to turn it on.
-var voiceEnabled = true;
+builder.Services.AddHttpClient("ollama", c =>
+{
+    c.BaseAddress = new Uri("http://localhost:11434/");
+    c.Timeout = TimeSpan.FromSeconds(120);
+});
+
+var voiceEnabled = builder.Configuration.GetValue("Jarvis:VoiceEnabled", true);
 if (voiceEnabled)
     builder.Services.AddSingleton<ISpeechOutput, SystemSpeechOutput>();
 else

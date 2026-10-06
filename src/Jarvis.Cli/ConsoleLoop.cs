@@ -1,10 +1,8 @@
-﻿using Jarvis.Cli.Service;
+using Jarvis.Cli.Service;
 using Jarvis.Cli.Service.Audio;
 using Jarvis.Core.Interface;
+using Jarvis.Core.Service;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Jarvis.Cli
 {

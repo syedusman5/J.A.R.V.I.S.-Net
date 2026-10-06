@@ -1,4 +1,4 @@
-﻿using Jarvis.Core.Interface;
+using Jarvis.Core.Interface;
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Json;
@@ -6,20 +6,20 @@ using System.Text;
 
 namespace Jarvis.Core.Service
 {
-    public class OllamaLlmService(IHttpClientFactory httpClientFactory) : ILlmService
+    public sealed class OllamaLlmService(IHttpClientFactory httpClientFactory) : ILlmService
     {
         public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken = default)
         {
-            var client = httpClientFactory.CreateClient("jarvis");
+            var client = httpClientFactory.CreateClient("ollama");
 
             var request = new
             {
-                model = "llama3.2",
+                model = "llama3.2:3b",
                 prompt = prompt,
                 stream = false
             };
 
-            var response = await client.PostAsJsonAsync("http://localhost:11434/api/generate",request, cancellationToken);
+            var response = await client.PostAsJsonAsync("api/generate", request, cancellationToken);
 
             response.EnsureSuccessStatusCode();
 

@@ -18,23 +18,20 @@ namespace Jarvis.Core.Skill
             var askingAboutMe = request.ContainsAllWords("how are you");
 
             var result = string.Empty;
-            var spokenResult = string.Empty;
 
             if (isGreeting)
             {
                 result = "Hi, What are we gonna build today?";
-                spokenResult = "Hello Sir, I have been waiting for you.";
             }
                 
 
             if (askingAboutMe)
             {
                 result = "I'm doing good, thanks for asking."; 
-                spokenResult = "Im great, thanks for asking, Let's dive in";
             }
                 
 
-            return Task.FromResult(SkillResult.Ok(result, spokenResult));
+            return Task.FromResult(SkillResult.Ok(result, result));
         }
 
         public int Score(UserRequest request)
